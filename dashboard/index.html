@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Smart AQI — Air Quality Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ---------- THEME / GLOBAL ---------- */
+:root{
+  --bg:#f8fbff;
+  --text:#0b1730;
+  --muted:rgba(11,23,48,0.72);
+  --muted2:rgba(11,23,48,0.55);
+  --primary:#2563EB;
+  --accent:#0EA5E9;
+  --surface:rgba(255,255,255,0.78);
+  --surface-solid:#ffffff;
+  --border:rgba(11,23,48,0.10);
+  --shadow-sm:0 10px 30px rgba(11,23,48,0.08);
+  --shadow:0 24px 80px rgba(11,23,48,0.12);
+  --radius:18px;
+  --radius-sm:14px;
+  --nav-h:72px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 18px);}
+body{
+  font-family:'Poppins',sans-serif;
+  color:var(--text);
+  line-height:1.65;
+  background:
+    radial-gradient(600px 260px at 15% 0%, rgba(14,165,233,0.22) 0%, transparent 60%),
+    radial-gradient(520px 260px at 85% 0%, rgba(37,99,235,0.18) 0%, transparent 55%),
+    var(--bg);
+}
+a{text-decoration:none;color:inherit;}
+.container{width:min(1100px,90%);margin:auto;}
+
+/* ---------- NAVBAR ---------- */
+.navbar{
+  position:fixed;top:0;left:0;width:100%;
+  height:var(--nav-h);
+  z-index:1000;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 5%;
+  background:rgba(248,251,255,0.78);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+  box-shadow:0 6px 24px rgba(11,23,48,0.06);
+}
+.logo{
+  font-size:1.15rem;font-weight:700;
+  letter-spacing:0.2px;
+  color:var(--primary);
+}
+.navbar ul{
+  display:flex;list-style:none;
+  align-items:center;
+  gap:0.35rem;
+}
+.navbar a{
+  font-weight:500;
+  color:rgba(11,23,48,0.86);
+  padding:0.45rem 0.8rem;
+  border-radius:999px;
+  transition:background .2s,color .2s,transform .2s;
+}
+.navbar a:hover{color:var(--primary);background:rgba(37,99,235,0.10);}
+.menu-toggle{
+  display:none;
+  font-size:1.7rem;
+  line-height:1;
+  color:var(--primary);
+  cursor:pointer;
+  user-select:none;
+}
+@media(max-width:768px){
+  .navbar ul{
+    display:none;
+    flex-direction:column;
+    gap:0.4rem;
+    background:rgba(248,251,255,0.92);
+    border:1px solid var(--border);
+    box-shadow:var(--shadow-sm);
+    position:absolute;
+    top:calc(var(--nav-h) - 10px);
+    left:5%;
+    right:5%;
+    padding:0.9rem;
+    border-radius:var(--radius);
+  }
+  .navbar ul.show{display:flex;}
+  .menu-toggle{display:block;}
+}
+
+/* ---------- HERO ---------- */
+.hero{
+  min-height:100vh;
+  padding-top:var(--nav-h);
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:#fff;
+  overflow:hidden;
+  background:
+    linear-gradient(120deg, rgba(37,99,235,0.86), rgba(14,165,233,0.72)),
+    url('air_env_cover1.jpg') center/cover no-repeat;
+}
+.hero::before{
+  content:'';
+  position:absolute;inset:0;
+  background-image: radial-gradient(rgba(255,255,255,0.18) 1px, transparent 1px);
+  background-size:22px 22px;
+  opacity:0.22;
+  pointer-events:none;
+}
+.hero-content{
+  position:relative;
+  z-index:2;
+  max-width:900px;
+  padding:clamp(1.2rem,4vw,2.2rem);
+  margin:0 1rem;
+  border-radius:calc(var(--radius) + 6px);
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.18);
+  box-shadow:0 30px 90px rgba(0,0,0,0.18);
+  backdrop-filter:blur(18px);
+  animation:fadeInUp 0.9s ease both;
+}
+.hero h1{
+  font-size:clamp(2.15rem,4.7vw,3.6rem);
+  line-height:1.05;
+  margin-bottom:0.85rem;
+  letter-spacing:-0.02em;
+  text-shadow:0 10px 40px rgba(0,0,0,0.22);
+}
+.hero p{
+  font-size:clamp(0.98rem,2.2vw,1.15rem);
+  margin:0 auto 1.6rem;
+  max-width:55ch;
+  opacity:0.96;
+  text-shadow:0 6px 22px rgba(0,0,0,0.22);
+}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:0.45rem;
+  padding:0.8rem 1.15rem;
+  border-radius:999px;
+  font-weight:600;
+  letter-spacing:0.2px;
+  transition:transform .22s, box-shadow .22s, background .22s, border-color .22s, color .22s;
+  border:1px solid rgba(255,255,255,0.22);
+  margin:0.25rem 0.3rem;
+}
+.btn-primary{
+  background:linear-gradient(90deg, var(--primary), var(--accent));
+  color:#fff;
+  border-color:rgba(255,255,255,0.18);
+  box-shadow:0 14px 34px rgba(0,0,0,0.18);
+}
+.btn-primary:hover{transform:translateY(-4px);box-shadow:0 18px 44px rgba(0,0,0,0.22);}
+.btn-ghost{
+  background:rgba(255,255,255,0.10);
+  color:#fff;
+}
+.btn-ghost:hover{transform:translateY(-4px);background:rgba(255,255,255,0.14);}
+@media(max-width:768px){
+  .btn{width:100%;max-width:420px;}
+}
+
+/* ---------- SECTION BASE ---------- */
+.about, .features, .dashboards, .models, .contact{padding:clamp(3.5rem,6vw,4.8rem) 0;}
+.about h2, .features h2, .dashboards h2, .models h2, .contact h2{
+  font-size:clamp(1.55rem,3.2vw,2.1rem);
+  color:var(--primary);
+  margin-bottom:1.1rem;
+  letter-spacing:-0.02em;
+}
+.about p, .dash-card p, .feature p, .model-card p{color:var(--muted);}
+
+/* ---------- ABOUT ---------- */
+.about{text-align:center;}
+.about p{max-width:880px;margin:auto;font-size:1.02rem;}
+.about img{
+  margin-top:2rem;
+  width:100%;
+  border-radius:calc(var(--radius) + 4px);
+  box-shadow:var(--shadow);
+  border:1px solid rgba(255,255,255,0.55);
+  background:rgba(255,255,255,0.65);
+}
+
+/* ---------- FEATURES ---------- */
+.features{
+  text-align:center;
+  background:linear-gradient(180deg, rgba(14,165,233,0.06), transparent 65%);
+}
+.feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.1rem;margin-top:1.7rem;}
+.feature{
+  background:var(--surface-solid);
+  border:1px solid var(--border);
+  padding:1.45rem 1.35rem;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow-sm);
+  transition:transform .22s, box-shadow .22s, border-color .22s;
+}
+.feature:hover{transform:translateY(-6px);box-shadow:0 18px 50px rgba(11,23,48,0.12);border-color:rgba(37,99,235,0.18);}
+.feature h3{color:var(--accent);margin-bottom:0.55rem;font-size:1.05rem;}
+.feature p{font-size:0.95rem;}
+
+/* ---------- DASHBOARDS ---------- */
+.dashboards{text-align:center;}
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.1rem;margin-top:1.7rem;}
+.dash-card{
+  background:linear-gradient(180deg, var(--surface-solid), rgba(14,165,233,0.05));
+  border:1px solid var(--border);
+  padding:1.45rem 1.35rem;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow-sm);
+  transition:transform .22s, box-shadow .22s, border-color .22s;
+}
+.dash-card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 20px 60px rgba(11,23,48,0.12);
+  border-color:rgba(14,165,233,0.24);
+}
+.dash-card h3{color:var(--accent);margin-bottom:0.6rem;font-size:1.05rem;}
+.dash-card a{color:var(--primary);font-weight:700;}
+.dash-card a:hover{text-decoration:underline;}
+
+/* ---------- MODELS ---------- */
+.models{
+  text-align:center;
+  background:linear-gradient(180deg, rgba(37,99,235,0.06), transparent 70%);
+}
+.model-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.1rem;margin-top:1.7rem;}
+.model-card{
+  background:var(--surface-solid);
+  border:1px solid var(--border);
+  padding:1.45rem 1.35rem;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow-sm);
+  transition:transform .22s, box-shadow .22s, border-color .22s;
+}
+.model-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 18px 50px rgba(11,23,48,0.12);
+  border-color:rgba(37,99,235,0.20);
+}
+.model-card h3{color:var(--accent);margin-bottom:0.5rem;font-size:1.05rem;}
+
+/* ---------- CONTACT ---------- */
+.contact{
+  text-align:center;
+  color:white;
+  background:linear-gradient(135deg, var(--accent), var(--primary));
+  position:relative;
+  overflow:hidden;
+}
+.contact::before{
+  content:'';
+  position:absolute;inset:-2px;
+  background:
+    radial-gradient(340px 200px at 10% 20%, rgba(255,255,255,0.18) 0%, transparent 60%),
+    radial-gradient(360px 220px at 90% 0%, rgba(255,255,255,0.16) 0%, transparent 62%);
+  pointer-events:none;
+}
+.contact .container{position:relative;z-index:1;}
+.contact h2{color:#fff;}
+form{
+  max-width:640px;
+  margin:1.5rem auto 0;
+  text-align:left;
+  background:rgba(255,255,255,0.12);
+  border:1px solid rgba(255,255,255,0.22);
+  border-radius:var(--radius);
+  padding:1.35rem;
+  backdrop-filter:blur(14px);
+}
+.field{margin-bottom:1rem;}
+label{display:block;margin-bottom:0.35rem;font-weight:500;}
+input,textarea{
+  width:100%;
+  padding:0.8rem 0.9rem;
+  border:none;
+  border-radius:12px;
+  font-size:1rem;
+  color:var(--text);
+  background:rgba(255,255,255,0.92);
+  outline:none;
+}
+input:focus, textarea:focus{box-shadow:0 0 0 4px rgba(255,255,255,0.22);}
+button.submit-btn{
+  width:100%;
+  background:white;
+  color:var(--primary);
+  border:none;
+  padding:0.85rem 1.1rem;
+  border-radius:999px;
+  font-weight:700;
+  cursor:pointer;
+  transition:transform .18s, background .18s;
+}
+button.submit-btn:hover{background:rgba(255,255,255,0.92);transform:translateY(-2px);}
+
+/* ---------- FOOTER ---------- */
+footer{
+  background:linear-gradient(180deg,#03223f,#0b3b78);
+  color:white;
+  padding:2.4rem 1rem;
+  text-align:center;
+}
+.footer-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:1.2rem;
+  margin-bottom:1.3rem;
+  text-align:left;
+}
+.footer-col h4{margin-bottom:0.8rem;color:var(--accent);}
+.footer-col ul{list-style:none;padding:0;}
+.footer-col li{margin-bottom:0.45rem;font-size:0.95rem;color:rgba(255,255,255,0.88);}
+.footer-col a:hover{text-decoration:underline;}
+.footer-bottom{
+  border-top:1px solid rgba(255,255,255,0.18);
+  padding-top:1rem;
+  font-size:0.92rem;
+  color:rgba(255,255,255,0.86);
+}
+.footer-social a{margin:0 0.4rem;color:var(--accent);font-weight:bold;}
+
+/* ---------- ANIMATIONS ---------- */
+.fade-up{opacity:0;transform:translateY(16px);transition:opacity 0.7s ease, transform 0.7s ease;}
+.fade-up.show{opacity:1;transform:translateY(0);}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);} }
+@media (prefers-reduced-motion: reduce){
+  *{scroll-behavior:auto !important;}
+  .fade-up{opacity:1 !important;transform:none !important;}
+  .hero-content{animation:none !important;}
+  .btn, .feature, .dash-card, .model-card{transition:none !important;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="logo">Smart AQI</div>
+  <div class="menu-toggle" id="menuToggle">☰</div>
+  <ul id="menuList">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#dashboards">Dashboards</a></li>
+    <li><a href="#models">Models</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-content">
+    <h1>Monitor. Predict. Breathe Better.</h1>
+    <p>AI-powered Air Quality Intelligence — combining deep learning, forecasting, and real-time insights for a cleaner tomorrow.</p>
+    <a href="#dashboards" class="btn btn-primary">Explore Dashboards</a>
+    <a href="http://localhost:8501" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">Launch Dashboard</a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="container fade-up">
+    <h2>About Smart AQI</h2>
+    <p>
+      Smart AQI (Air Quality Intelligence) is a data-driven project using historical AQI data to forecast and visualize pollution patterns.
+      Powered by AI models like LSTM, ARIMA, Prophet, and XGBoost, it provides real-time and predictive insights for environmental planning.
+    </p>
+    <img src="air_env_cover1.jpg" alt="Smart AQI Overview" loading="lazy" decoding="async">
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="container fade-up">
+    <h2>Key Features</h2>
+    <div class="feature-grid">
+      <div class="feature"><h3>📊 Historical Data Analysis</h3><p>Explore years of AQI records for cities and pollutants.</p></div>
+      <div class="feature"><h3>🤖 AI Forecasting</h3><p>Predict AQI trends using LSTM, Prophet, and ARIMA.</p></div>
+      <div class="feature"><h3>🚨 Real-Time Alerts</h3><p>Stay informed with alerts when pollution exceeds safe limits.</p></div>
+      <div class="feature"><h3>🌍 Interactive Dashboards</h3><p>Visualize and compare air quality metrics easily.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- DASHBOARDS -->
+<section class="dashboards" id="dashboards">
+  <div class="container fade-up">
+    <h2>📈 Explore Dashboards</h2>
+    <div class="cards-grid">
+      <div class="dash-card"><h3>D1: Data Explorer</h3><p>Analyze historical AQI data by location & pollutant.</p><a href="http://localhost:8501" target="_blank" rel="noopener noreferrer">Open Dashboard →</a></div>
+      <div class="dash-card"><h3>D2: Forecast Engine</h3><p>Generate upcoming pollutant predictions.</p><a href="http://localhost:8502" target="_blank" rel="noopener noreferrer">Open Dashboard →</a></div>
+      <div class="dash-card"><h3>D3: Alert System</h3><p>Get notifications for pollution spikes.</p><a href="http://localhost:8503" target="_blank" rel="noopener noreferrer">Open Dashboard →</a></div>
+      <div class="dash-card"><h3>D4: Model Training</h3><p>Monitor AI training accuracy & metrics.</p><a href="http://localhost:8504" target="_blank" rel="noopener noreferrer">Open Dashboard →</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- MODELS -->
+<section class="models" id="models">
+  <div class="container fade-up">
+    <h2>🧠 Our AI Models</h2>
+    <div class="model-grid">
+      <div class="model-card"><h3>LSTM</h3><p>Captures time-based pollutant dependencies.</p></div>
+      <div class="model-card"><h3>ARIMA</h3><p>Reliable trend and seasonal forecasting.</p></div>
+      <div class="model-card"><h3>Prophet</h3><p>Handles long-term & seasonal variations effectively.</p></div>
+      <div class="model-card"><h3>XGBoost</h3><p>Boosted model for pollutant importance analysis.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="container fade-up">
+    <h2>Get in Touch</h2>
+    <form onsubmit="event.preventDefault();alert('Message Sent!');">
+      <div class="field"><label>Name</label><input type="text" placeholder="Your name" required></div>
+      <div class="field"><label>Email</label><input type="email" placeholder="Your email" required></div>
+      <div class="field"><label>Message</label><textarea rows="5" placeholder="Write your message..." required></textarea></div>
+      <button class="submit-btn">Submit</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>About</h4>
+        <ul>
+          <li>Historical AQI Project</li>
+          <li>Deep Learning Forecasts</li>
+          <li>Data-driven Insights</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Dashboards</h4>
+        <ul>
+          <li><a href="http://localhost:8501" target="_blank" rel="noopener noreferrer">Data Explorer</a></li>
+          <li><a href="http://localhost:8502" target="_blank" rel="noopener noreferrer">Forecast Engine</a></li>
+          <li><a href="http://localhost:8503" target="_blank" rel="noopener noreferrer">Alert System</a></li>
+          <li><a href="http://localhost:8504" target="_blank" rel="noopener noreferrer">Model Training</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li>Email: info@smartaqi.in</li>
+          <li>Phone: +91 98765 43210</li>
+          <li>Location: Delhi, India</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Follow Us</h4>
+        <div class="footer-social">
+          <a href="#">🌐</a><a href="#">💼</a><a href="#">🐦</a><a href="#">📸</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2025 Smart AQI | Powered by LSTM, ARIMA, Prophet & XGBoost
+    </div>
+  </div>
+</footer>
+
+<!-- JS -->
+<script>
+const menuToggle=document.getElementById('menuToggle');
+const menuList=document.getElementById('menuList');
+menuToggle.onclick=()=>menuList.classList.toggle('show');
+
+const aboutImg=document.querySelector('.about img');
+if(aboutImg){
+  aboutImg.addEventListener('error',()=>{aboutImg.style.display='none';});
+}
+
+const fadeElements=document.querySelectorAll('.fade-up');
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('show');}});
+});
+fadeElements.forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>

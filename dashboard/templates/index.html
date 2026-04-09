@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Air Quality Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+  <div class="dashboard">
+    <div class="sidebar">
+      <h3>Data Controls</h3>
+      <label>Pollutant:</label>
+      <select id="pollutant-select">
+        {% for p in pollutants %}
+        <option value="{{ p }}">{{ p }}</option>
+        {% endfor %}
+      </select>
+      <button id="apply">Apply Filters</button>
+
+      <div class="quality">
+        <h4>Data Quality</h4>
+        <p>Completeness: <span>92%</span></p>
+        <p>Validity: <span>87%</span></p>
+      </div>
+    </div>
+
+    <div class="main">
+      <div class="card" id="time-series"></div>
+      <div class="card" id="correlation"></div>
+      <div class="card" id="stats"></div>
+      <div class="card" id="distribution"></div>
+    </div>
+  </div>
+
+  <script>
+  async function loadData(pollutant) {
+    const res = await fetch(`/api/data?pollutant=${pollutant}`);
+    return await res.json();
+  }
+
+  async function loadStats(pollutant) {
+    const res = await fetch(`/api/stats?pollutant=${pollutant}`);
+    return await res.json();
+  }
+
+  async function loadCorrelation() {
+    const res = await fetch(`/api/correlation`);
+    return await res.json();
+  }
+
+  async function renderAll() {
+    const pollutant = document.getElementById("pollutant-select").value;
+    const data = await loadData(pollutant);
+    const stats = await loadStats(pollutant);
+    const corr = await loadCorrelation();
+
+    // ✅ 1. Time Series
+    const trace = {
+      x: data.map(d => d.Datetime),
+      y: data.map(d => d[pollutant]),
+      type: 'scatter',
+      mode: 'lines+markers',
+      line: { color: '#2e8b57', width: 2 },
+      marker: { size: 4, color: '#2e8b57' }
+    };
+    Plotly.newPlot('time-series', [trace], {
+      title: `${pollutant} Time Series`,
+      margin: { t: 40, l: 50, r: 30, b: 40 },
+      paper_bgcolor: '#f5fff5',
+      plot_bgcolor: '#f5fff5'
+    });
+
+    // ✅ 2. Correlation Heatmap
+    const keys = Object.keys(corr);
+    const z = keys.map(k1 => keys.map(k2 => corr[k1][k2]));
+    Plotly.newPlot('correlation', [{
+      z, x: keys, y: keys, type: 'heatmap', colorscale: 'Greens'
+    }], {
+      title: 'Pollutant Correlations',
+      margin: { t: 40, l: 60, r: 30, b: 40 }
+    });
+
+    // ✅ 3. Statistical Summary
+    document.getElementById("stats").innerHTML = `
+      <h4>Statistical Summary</h4>
+      <div class="stats-grid">
+        <div>Mean<br><b>${stats.mean}</b></div>
+        <div>Median<br><b>${stats.median}</b></div>
+        <div>Max<br><b>${stats.max}</b></div>
+        <div>Min<br><b>${stats.min}</b></div>
+        <div>Std Dev<br><b>${stats.std}</b></div>
+        <div>Count<br><b>${stats.count}</b></div>
+      </div>
+    `;
+
+    // ✅ 4. Distribution
+    Plotly.newPlot('distribution', [{
+      x: data.map(d => d[pollutant]),
+      type: 'histogram',
+      marker: { color: '#2e8b57' },
+      nbinsx: 10
+    }], {
+      title: 'Distribution Analysis',
+      paper_bgcolor: '#f5fff5',
+      plot_bgcolor: '#f5fff5'
+    });
+  }
+
+  document.getElementById("apply").addEventListener("click", renderAll);
+  window.onload = renderAll;
+  </script>
+</body>
+</html>
