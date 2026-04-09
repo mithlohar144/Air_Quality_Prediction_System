@@ -11,25 +11,6 @@ import os
 
 st.set_page_config(page_title="D1 · Data Explorer — AirPulse", layout="wide", page_icon="📊")
 
-# ── Sidebar open/close
-if "ap_sidebar_open" not in st.session_state:
-    st.session_state.ap_sidebar_open = True
-
-_rerun = getattr(st, "rerun", st.experimental_rerun)
-
-if st.sidebar.button("✕ Close sidebar", key="ap_close_sidebar_d1"):
-    st.session_state.ap_sidebar_open = False
-    _rerun()
-
-if not st.session_state.ap_sidebar_open:
-    st.markdown(
-        "<style>section[data-testid=\"stSidebar\"]{display:none !important;}</style>",
-        unsafe_allow_html=True,
-    )
-    if st.button("☰ Open sidebar", key="ap_open_sidebar_d1"):
-        st.session_state.ap_sidebar_open = True
-        _rerun()
-
 # ── Shared dark-theme CSS
 st.markdown("""
 <style>
@@ -47,7 +28,6 @@ html,body,[data-testid="stAppViewContainer"],[data-testid="stApp"]{
 [data-testid="stHeader"],footer,#MainMenu{display:none !important;}
 .block-container{padding:0 !important; max-width:100% !important;}
 [data-testid="stSidebar"]{background:var(--surface) !important; border-right:1px solid var(--border);}
-[data-testid^="stSidebarNav"]{display:none !important;}
 [data-testid="stSidebar"] *{color:var(--text) !important;}
 .stSelectbox>div>div, .stRadio>div, .stSlider{color:var(--text);}
 [data-testid="stSelectbox"] div[data-baseweb="select"] > div,

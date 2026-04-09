@@ -7,25 +7,6 @@ import os
 
 st.set_page_config(page_title="D3 · Alert System — AirPulse", layout="wide", page_icon="🚨")
 
-# ── Sidebar open/close
-if "ap_sidebar_open" not in st.session_state:
-    st.session_state.ap_sidebar_open = True
-
-_rerun = getattr(st, "rerun", st.experimental_rerun)
-
-if st.sidebar.button("✕ Close sidebar", key="ap_close_sidebar_d3"):
-    st.session_state.ap_sidebar_open = False
-    _rerun()
-
-if not st.session_state.ap_sidebar_open:
-    st.markdown(
-        "<style>section[data-testid=\"stSidebar\"]{display:none !important;}</style>",
-        unsafe_allow_html=True,
-    )
-    if st.button("☰ Open sidebar", key="ap_open_sidebar_d3"):
-        st.session_state.ap_sidebar_open = True
-        _rerun()
-
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
@@ -35,7 +16,6 @@ html,body,[data-testid="stAppViewContainer"],[data-testid="stApp"]{background:va
 [data-testid="stHeader"],footer,#MainMenu{display:none !important;}
 .block-container{padding:0 !important;max-width:100% !important;}
 [data-testid="stSidebar"]{background:var(--surface) !important;border-right:1px solid var(--border);}
-[data-testid^="stSidebarNav"]{display:none !important;}
 [data-testid="stSidebar"] *{color:var(--text) !important;}
 [data-testid="stSelectbox"] div[data-baseweb="select"] > div{background:var(--surface2) !important;border-color:var(--border) !important;color:var(--text) !important;}
 div[data-testid="metric-container"]{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem 1.25rem;}
