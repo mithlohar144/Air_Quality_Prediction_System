@@ -16,6 +16,36 @@ st.markdown("""
 /* ── HOME-SPECIFIC ─── */
 section[data-testid="stSidebar"] { display: none !important; }
 
+/* Use shared theme accents (no inline styles) */
+.ap-accent-sky {
+    --tile-color: var(--sky);
+    --tile-bg: rgba(148,212,255,0.07);
+    --tile-border: rgba(148,212,255,0.18);
+    --tile-glow: rgba(148,212,255,0.06);
+    --tile-shadow: rgba(148,212,255,0.12);
+}
+.ap-accent-violet {
+    --tile-color: var(--violet);
+    --tile-bg: rgba(196,181,253,0.07);
+    --tile-border: rgba(196,181,253,0.18);
+    --tile-glow: rgba(196,181,253,0.06);
+    --tile-shadow: rgba(196,181,253,0.12);
+}
+.ap-accent-rose {
+    --tile-color: var(--rose);
+    --tile-bg: rgba(253,164,175,0.07);
+    --tile-border: rgba(253,164,175,0.18);
+    --tile-glow: rgba(253,164,175,0.06);
+    --tile-shadow: rgba(253,164,175,0.12);
+}
+.ap-accent-mint {
+    --tile-color: var(--mint);
+    --tile-bg: rgba(110,231,183,0.07);
+    --tile-border: rgba(110,231,183,0.18);
+    --tile-glow: rgba(110,231,183,0.06);
+    --tile-shadow: rgba(110,231,183,0.12);
+}
+
 .ap-hero {
     position: relative;
     padding: 6rem 2.5rem 5rem;
@@ -175,7 +205,11 @@ section[data-testid="stSidebar"] { display: none !important; }
                 0 12px 40px var(--tile-shadow, rgba(148,212,255,0.1));
     transform: translateY(-3px);
 }
-.ap-dash-tile:hover::before { opacity: 2; }
+.ap-dash-tile:hover::before { opacity: 1; }
+.ap-dash-tile:focus-visible {
+    outline: 2px solid var(--tile-color, var(--sky));
+    outline-offset: 4px;
+}
 .ap-tile-badge {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em;
@@ -210,8 +244,11 @@ section[data-testid="stSidebar"] { display: none !important; }
     margin-top: 2.5rem;
     border: 1px solid var(--wire);
     border-radius: 14px; overflow: hidden;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 .ap-ref-table { width: 100%; border-collapse: collapse; }
+.ap-ref-table { min-width: 760px; }
 .ap-ref-table thead { background: var(--ink3); }
 .ap-ref-table th {
     padding: 0.8rem 1.25rem; text-align: left;
@@ -329,6 +366,43 @@ section[data-testid="stSidebar"] { display: none !important; }
     height: 1px; background: var(--wire);
     margin: 0 2.5rem;
 }
+
+/* ── RESPONSIVE ─── */
+@media (max-width: 960px) {
+    .ap-stat-band { grid-template-columns: repeat(2, 1fr); }
+    .ap-stat-cell { border-bottom: 1px solid var(--wire); }
+    .ap-stat-cell:nth-child(2n) { border-right: none; }
+    .ap-stat-cell:nth-last-child(-n+2) { border-bottom: none; }
+}
+
+@media (max-width: 540px) {
+    .ap-hero { padding: 4.5rem 1.3rem 4rem; }
+    .ap-section { padding: 3.5rem 1.3rem; }
+    .ap-stat-band { grid-template-columns: 1fr; }
+    .ap-stat-cell {
+        padding: 1.2rem 1.3rem;
+        border-right: none;
+        border-bottom: 1px solid var(--wire);
+    }
+    .ap-stat-cell:last-child { border-bottom: none; }
+    .ap-footer {
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: flex-start;
+        padding: 1.4rem 1.3rem;
+    }
+    .ap-footer-links { flex-wrap: wrap; }
+    .ap-sep { margin: 0 1.3rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .rise { animation: none !important; }
+    .ap-tag::before { animation: none !important; }
+    .ap-hero h1 .hl { animation: none !important; }
+    .ap-dash-tile,
+    .ap-cta-primary,
+    .ap-cta-ghost { transition: none !important; }
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -390,8 +464,7 @@ st.markdown("""
 
     <div class="ap-dash-grid">
 
-        <a href="https://dashboard1air.streamlit.app/" class="ap-dash-tile"
-            style="--tile-color:#94d4ff;--tile-bg:rgba(148,212,255,0.07);--tile-border:rgba(148,212,255,0.18);--tile-glow:rgba(148,212,255,0.06);--tile-shadow:rgba(148,212,255,0.12);">
+        <a href="/Data_Explorer" class="ap-dash-tile ap-accent-sky">
             <div class="ap-tile-badge">D1 · DATA</div>
             <div class="ap-tile-icon">📊</div>
             <div class="ap-tile-title">Data Explorer</div>
@@ -399,8 +472,7 @@ st.markdown("""
             <div class="ap-tile-cta">Open → </div>
         </a>
 
-        <a href="https://forecastair.streamlit.app/" class="ap-dash-tile"
-            style="--tile-color:#c4b5fd;--tile-bg:rgba(196,181,253,0.07);--tile-border:rgba(196,181,253,0.18);--tile-glow:rgba(196,181,253,0.06);--tile-shadow:rgba(196,181,253,0.12);">
+        <a href="/Forecast_Engine" class="ap-dash-tile ap-accent-violet">
             <div class="ap-tile-badge">D2 · FORECAST</div>
             <div class="ap-tile-icon">📈</div>
             <div class="ap-tile-title">Forecast Engine</div>
@@ -408,8 +480,7 @@ st.markdown("""
             <div class="ap-tile-cta">Open → </div>
         </a>
 
-        <a href="https://alertsair.streamlit.app/" class="ap-dash-tile"
-            style="--tile-color:#fda4af;--tile-bg:rgba(253,164,175,0.07);--tile-border:rgba(253,164,175,0.18);--tile-glow:rgba(253,164,175,0.06);--tile-shadow:rgba(253,164,175,0.12);">
+        <a href="/Alert_System" class="ap-dash-tile ap-accent-rose">
             <div class="ap-tile-badge">D3 · ALERTS</div>
             <div class="ap-tile-icon">🚨</div>
             <div class="ap-tile-title">Alert System</div>
@@ -417,8 +488,7 @@ st.markdown("""
             <div class="ap-tile-cta">Open → </div>
         </a>
 
-        <a href="https://admirairr.streamlit.app/" class="ap-dash-tile"
-            style="--tile-color:#6ee7b7;--tile-bg:rgba(110,231,183,0.07);--tile-border:rgba(110,231,183,0.18);--tile-glow:rgba(110,231,183,0.06);--tile-shadow:rgba(110,231,183,0.12);">
+        <a href="/Admin_Dashboard" class="ap-dash-tile ap-accent-mint">
             <div class="ap-tile-badge">D4 · ADMIN</div>
             <div class="ap-tile-icon">🧠</div>
             <div class="ap-tile-title">Admin Panel</div>

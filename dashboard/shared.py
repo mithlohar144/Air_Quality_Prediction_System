@@ -84,7 +84,7 @@ section[data-testid="stSidebar"] label { color: var(--text2) !important; font-si
 }
 .ap-logo-mark {
     width: 28px; height: 28px; border-radius: 8px;
-    background: linear-gradient(135deg, #94d4ff 0%, #6ee7b7 100%);
+    background: linear-gradient(135deg, var(--sky) 0%, var(--mint) 100%);
     display: flex; align-items: center; justify-content: center;
     font-size: 0.85rem;
 }
@@ -296,13 +296,7 @@ hr { border-color: var(--wire) !important; }
 
 def nav(active: str) -> str:
     """Render the shared navigation bar. active = 'home'|'data'|'forecast'|'alerts'|'admin'"""
-    pages = [
-        ("home",     "https://aqipredication.streamlit.app/",     "Home"),
-        ("data",     "https://dashboard1air.streamlit.app/",    "D1 · Data"),
-        ("forecast", "https://forecastair.streamlit.app/",  "D2 · Forecast"),
-        ("alerts",   "https://alertsair.streamlit.app/",     "D3 · Alerts"),
-        ("admin",    "https://admirairr.streamlit.app/",  "D4 · Admin"),
-    ]
+    
     links = ""
     for key, href, label in pages:
         cls = "ap-nav-link active" if key == active else "ap-nav-link"
@@ -310,7 +304,7 @@ def nav(active: str) -> str:
 
     return f"""
 <nav class="ap-nav">
-    <a href="https://aqipredication.streamlit.app/" class="ap-logo">
+    <a href="/" class="ap-logo">
         <div class="ap-logo-mark">🌬</div>
         <span class="ap-logo-text">Air<em>Pulse</em></span>
     </a>
