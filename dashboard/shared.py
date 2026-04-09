@@ -293,11 +293,11 @@ hr { border-color: var(--wire) !important; }
 def nav(active: str) -> str:
     """Render the shared navigation bar. active = 'home'|'data'|'forecast'|'alerts'|'admin'"""
     pages = [
-        ("home",     "/",                 "Home"),
-        ("data",     "/Data_Explorer",    "D1 · Data"),
-        ("forecast", "/Forecast_Engine",  "D2 · Forecast"),
-        ("alerts",   "/Alert_System",     "D3 · Alerts"),
-        ("admin",    "/Admin_Dashboard",  "D4 · Admin"),
+        ("home",     "https://aqipredication.streamlit.app/",     "Home"),
+        ("data",     "https://dashboard1air.streamlit.app/",    "D1 · Data"),
+        ("forecast", "https://forecastair.streamlit.app/",  "D2 · Forecast"),
+        ("alerts",   "https://alertsair.streamlit.app/",     "D3 · Alerts"),
+        ("admin",    "https://admirairr.streamlit.app/",  "D4 · Admin"),
     ]
     links = ""
     for key, href, label in pages:
@@ -306,7 +306,7 @@ def nav(active: str) -> str:
 
     return f"""
 <nav class="ap-nav">
-    <a href="/" class="ap-logo">
+    <a href="https://aqipredication.streamlit.app/" class="ap-logo">
         <div class="ap-logo-mark">🌬</div>
         <span class="ap-logo-text">Air<em>Pulse</em></span>
     </a>

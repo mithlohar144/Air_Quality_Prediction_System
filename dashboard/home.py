@@ -390,7 +390,7 @@ st.markdown("""
 
     <div class="ap-dash-grid">
 
-        <a href="/Data_Explorer" class="ap-dash-tile"
+        <a href="https://dashboard1air.streamlit.app/" class="ap-dash-tile"
             style="--tile-color:#94d4ff;--tile-bg:rgba(148,212,255,0.07);--tile-border:rgba(148,212,255,0.18);--tile-glow:rgba(148,212,255,0.06);--tile-shadow:rgba(148,212,255,0.12);">
             <div class="ap-tile-badge">D1 · DATA</div>
             <div class="ap-tile-icon">📊</div>
@@ -399,7 +399,7 @@ st.markdown("""
             <div class="ap-tile-cta">Open → </div>
         </a>
 
-        <a href="/Forecast_Engine" class="ap-dash-tile"
+        <a href="https://forecastair.streamlit.app/" class="ap-dash-tile"
             style="--tile-color:#c4b5fd;--tile-bg:rgba(196,181,253,0.07);--tile-border:rgba(196,181,253,0.18);--tile-glow:rgba(196,181,253,0.06);--tile-shadow:rgba(196,181,253,0.12);">
             <div class="ap-tile-badge">D2 · FORECAST</div>
             <div class="ap-tile-icon">📈</div>
@@ -408,7 +408,7 @@ st.markdown("""
             <div class="ap-tile-cta">Open → </div>
         </a>
 
-        <a href="/Alert_System" class="ap-dash-tile"
+        <a href="https://alertsair.streamlit.app/" class="ap-dash-tile"
             style="--tile-color:#fda4af;--tile-bg:rgba(253,164,175,0.07);--tile-border:rgba(253,164,175,0.18);--tile-glow:rgba(253,164,175,0.06);--tile-shadow:rgba(253,164,175,0.12);">
             <div class="ap-tile-badge">D3 · ALERTS</div>
             <div class="ap-tile-icon">🚨</div>
@@ -417,7 +417,7 @@ st.markdown("""
             <div class="ap-tile-cta">Open → </div>
         </a>
 
-        <a href="/Admin_Dashboard" class="ap-dash-tile"
+        <a href="https://admirairr.streamlit.app/" class="ap-dash-tile"
             style="--tile-color:#6ee7b7;--tile-bg:rgba(110,231,183,0.07);--tile-border:rgba(110,231,183,0.18);--tile-glow:rgba(110,231,183,0.06);--tile-shadow:rgba(110,231,183,0.12);">
             <div class="ap-tile-badge">D4 · ADMIN</div>
             <div class="ap-tile-icon">🧠</div>

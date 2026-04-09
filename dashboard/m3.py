@@ -49,12 +49,12 @@ st.markdown("""
 <nav class="ap-nav">
     <div class="ap-logo">🌬️ <span>Air</span>Pulse</div>
     <div class="ap-nav-links">
-        <a href="/">Home</a>
-        <a href="http://localhost:8501/">D1 · Data Explorer</a>
-        <a href="/Forecast_Engine">D2 · Forecast</a>
-        <a href="http://localhost:8503/" class="active">D3 · Alerts</a>
-        <a href="http://localhost:8504/">D4 · Admin</a>
-    </div>
+        <a href="https://aqipredication.streamlit.app/">Home</a>
+        <a href="https://dashboard1air.streamlit.app/" class="active">D1 · Data Explorer</a>
+        <a href="https://forecastair.streamlit.app/">D2 · Forecast</a>
+        <a href="https://alertsair.streamlit.app/">D3 · Alerts</a>
+        <a href="https://admirairr.streamlit.app/">D4 · Admin</a>
+    </div>>
 </nav>
 <div class="ap-page-header">
     <div class="ap-page-title">🚨 D3 · Alert System</div>
