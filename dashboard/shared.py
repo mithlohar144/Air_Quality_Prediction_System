@@ -44,6 +44,10 @@ section[data-testid="stSidebar"] {
     background: var(--ink2) !important;
     border-right: 1px solid var(--wire) !important;
 }
+/* ── HIDE DEFAULT MULTI-PAGE NAV ─── */
+[data-testid="stSidebarNav"] { display: none !important; }
+[data-testid="stSidebarNavSeparator"] { display: none !important; }
+[data-testid="stSidebarNavItems"] { display: none !important; }
 section[data-testid="stSidebar"] * { color: var(--text) !important; }
 section[data-testid="stSidebar"] [data-baseweb="select"] > div {
     background: var(--ink3) !important;
