@@ -24,10 +24,13 @@ div[data-testid="metric-container"] div[data-testid="stMetricValue"]{color:var(-
 .ap-nav{display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px;background:rgba(5,11,24,0.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
 .ap-logo{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800;color:var(--accent);}
 .ap-logo span{color:var(--text);}
+.ap-nav-right{display:flex;align-items:center;gap:0.6rem;}
 .ap-nav-links{display:flex;gap:0.2rem;}
 .ap-nav-links a{font-size:0.85rem;font-weight:500;color:var(--muted);text-decoration:none;padding:0.35rem 0.8rem;border-radius:8px;transition:all 0.2s;}
 .ap-nav-links a:hover{color:var(--text);background:var(--surface2);}
 .ap-nav-links a.active{color:var(--accent);background:rgba(129,140,248,0.1);}
+.ap-sidebar-toggle{padding:0.35rem 0.9rem;border-radius:8px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-size:0.8rem;font-weight:500;cursor:pointer;}
+.ap-sidebar-toggle:hover{background:var(--surface);}
 .ap-page-header{padding:2rem 2rem 1.5rem;border-bottom:1px solid var(--border);}
 .ap-page-title{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:#f1f5f9;letter-spacing:-0.02em;}
 .ap-page-sub{font-size:0.9rem;color:var(--muted);margin-top:0.25rem;}
@@ -40,11 +43,14 @@ div[data-testid="metric-container"] div[data-testid="stMetricValue"]{color:var(-
 st.markdown("""
 <nav class="ap-nav">
     <div class="ap-logo">🌬️ <span>Air</span>Pulse</div>
-    <div class="ap-nav-links">
-        <a href="https://dashboard1air.streamlit.app/">D1 · Data Explorer</a>
-        <a href="https://forecastair.streamlit.app/" class="active">D2 · Forecast</a>
-        <a href="https://alertsair.streamlit.app/">D3 · Alerts</a>
-        <a href="https://admirairr.streamlit.app/">D4 · Admin</a>
+    <div class="ap-nav-right">
+        <div class="ap-nav-links">
+            <a href="https://dashboard1air.streamlit.app/">D1 · Data Explorer</a>
+            <a href="https://forecastair.streamlit.app/" class="active">D2 · Forecast</a>
+            <a href="https://alertsair.streamlit.app/">D3 · Alerts</a>
+            <a href="https://admirairr.streamlit.app/">D4 · Admin</a>
+        </div>
+        <button class="ap-sidebar-toggle" onclick="const btn = document.querySelector('[data-testid=&quot;stSidebarCollapseButton&quot;]'); if(btn){btn.click();}">Filters</button>
     </div>
 </nav>
 <div class="ap-page-header">
