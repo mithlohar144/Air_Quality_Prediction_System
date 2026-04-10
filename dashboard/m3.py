@@ -16,6 +16,7 @@ html,body,[data-testid="stAppViewContainer"],[data-testid="stApp"]{background:va
 [data-testid="stHeader"],footer,#MainMenu{display:none !important;}
 .block-container{padding:0 !important;max-width:100% !important;}
 [data-testid="stSidebar"]{background:var(--surface) !important;border-right:1px solid var(--border);}
+[data-testid="stSidebarCollapseButton"]{display:none !important;}
 [data-testid="stSidebar"] *{color:var(--text) !important;}
 [data-testid="stSelectbox"] div[data-baseweb="select"] > div{background:var(--surface2) !important;border-color:var(--border) !important;color:var(--text) !important;}
 div[data-testid="metric-container"]{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem 1.25rem;}
