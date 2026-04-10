@@ -12,7 +12,7 @@ st.markdown("""
 *{box-sizing:border-box;}
 :root{--bg:#050b18;--surface:#0c1628;--surface2:#111f38;--border:rgba(99,179,237,0.12);--accent:#818cf8;--text:#e2e8f0;--muted:#64748b;}
 html,body,[data-testid="stAppViewContainer"],[data-testid="stApp"]{background:var(--bg) !important;font-family:'DM Sans',sans-serif;color:var(--text);}
-footer,#MainMenu{display:none !important;}
+[data-testid="stHeader"],footer,#MainMenu{display:none !important;}
 .block-container{padding:0 !important;max-width:100% !important;}
 [data-testid="stSidebar"]{background:var(--surface) !important;border-right:1px solid var(--border);}
 [data-testid^="stSidebarNav"]{display:block !important;}
