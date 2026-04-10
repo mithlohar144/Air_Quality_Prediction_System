@@ -27,26 +27,7 @@ html,body,[data-testid="stAppViewContainer"],[data-testid="stApp"]{
 }
 [data-testid="stHeader"],footer,#MainMenu{display:none !important;}
 .block-container{padding:0 !important; max-width:100% !important;}
-[data-testid="stSidebar"]{
-    background:var(--surface) !important;
-    border-right:1px solid var(--border);
-    position:fixed;
-    top:0;
-    left:0;
-    height:100vh;
-    width:280px;
-    transform:translateX(0);
-    transition:transform 0.25s ease-in-out;
-    z-index:1000;
-}
-[data-testid="stSidebarCollapseButton"]{display:none !important;}
-body.ap-sidebar-hidden [data-testid="stSidebar"]{transform:translateX(-100%);}
-body.ap-sidebar-hidden .ap-nav,
-body.ap-sidebar-hidden .ap-page-header,
-body.ap-sidebar-hidden .block-container{margin-left:0;}
-body:not(.ap-sidebar-hidden) .ap-nav,
-body:not(.ap-sidebar-hidden) .ap-page-header,
-body:not(.ap-sidebar-hidden) .block-container{margin-left:280px;}
+[data-testid="stSidebar"]{background:var(--surface) !important; border-right:1px solid var(--border);}
 [data-testid="stSidebar"] *{color:var(--text) !important;}
 .stSelectbox>div>div, .stRadio>div, .stSlider{color:var(--text);}
 [data-testid="stSelectbox"] div[data-baseweb="select"] > div,
@@ -93,7 +74,7 @@ st.markdown("""
             <a href="https://alertsair.streamlit.app/">D3 · Alerts</a>
             <a href="https://admirairr.streamlit.app/">D4 · Admin</a>
         </div>
-        <button class="ap-sidebar-toggle" onclick="document.body.classList.toggle('ap-sidebar-hidden');">Filters</button>
+        <button class="ap-sidebar-toggle" onclick="const btn = document.querySelector('[data-testid=&quot;stSidebarCollapseButton&quot;]'); if(btn){btn.click();}">Filters</button>
     </div>
 </nav>
 <div class="ap-page-header">
