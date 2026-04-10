@@ -4,7 +4,7 @@ import numpy as np
 import plotly.graph_objects as go
 import os
 
-st.set_page_config(page_title="D2 · Forecast Engine — AirPulse", layout="wide", page_icon="📈")
+st.set_page_config(page_title="D2 · Forecast Engine — AirPulse", layout="wide", page_icon="📈", initial_sidebar_state="expanded")
 
 st.markdown("""
 <style>

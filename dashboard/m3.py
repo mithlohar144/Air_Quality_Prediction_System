@@ -5,7 +5,7 @@ import plotly.graph_objects as go
 import random
 import os
 
-st.set_page_config(page_title="D3 · Alert System — AirPulse", layout="wide", page_icon="🚨")
+st.set_page_config(page_title="D3 · Alert System — AirPulse", layout="wide", page_icon="🚨", initial_sidebar_state="expanded")
 
 st.markdown("""
 <style>

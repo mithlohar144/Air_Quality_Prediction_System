@@ -9,7 +9,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import os
 
-st.set_page_config(page_title="D1 · Data Explorer — AirPulse", layout="wide", page_icon="📊")
+st.set_page_config(page_title="D1 · Data Explorer — AirPulse", layout="wide", page_icon="📊", initial_sidebar_state="expanded")
 
 # ── Shared dark-theme CSS
 st.markdown("""

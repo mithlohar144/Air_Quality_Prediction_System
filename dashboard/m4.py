@@ -5,7 +5,7 @@ import plotly.graph_objects as go
 import time
 import os
 
-st.set_page_config(page_title="D4 · Admin Dashboard — AirPulse", layout="wide", page_icon="🧠")
+st.set_page_config(page_title="D4 · Admin Dashboard — AirPulse", layout="wide", page_icon="🧠", initial_sidebar_state="expanded")
 
 st.markdown("""
 <style>
