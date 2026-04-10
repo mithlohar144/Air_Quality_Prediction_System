@@ -28,7 +28,6 @@ html,body,[data-testid="stAppViewContainer"],[data-testid="stApp"]{
 [data-testid="stHeader"],footer,#MainMenu{display:none !important;}
 .block-container{padding:0 !important; max-width:100% !important;}
 [data-testid="stSidebar"]{background:var(--surface) !important; border-right:1px solid var(--border);}
-[data-testid="stSidebarCollapseButton"]{display:none !important;}
 [data-testid="stSidebar"] *{color:var(--text) !important;}
 .stSelectbox>div>div, .stRadio>div, .stSlider{color:var(--text);}
 [data-testid="stSelectbox"] div[data-baseweb="select"] > div,

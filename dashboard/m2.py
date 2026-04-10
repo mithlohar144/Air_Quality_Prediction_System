@@ -15,7 +15,6 @@ html,body,[data-testid="stAppViewContainer"],[data-testid="stApp"]{background:va
 [data-testid="stHeader"],footer,#MainMenu{display:none !important;}
 .block-container{padding:0 !important;max-width:100% !important;}
 [data-testid="stSidebar"]{background:var(--surface) !important;border-right:1px solid var(--border);}
-[data-testid="stSidebarCollapseButton"]{display:none !important;}
 [data-testid^="stSidebarNav"]{display:none !important;}
 [data-testid="stSidebar"] *{color:var(--text) !important;}
 [data-testid="stSelectbox"] div[data-baseweb="select"] > div{background:var(--surface2) !important;border-color:var(--border) !important;color:var(--text) !important;}
@@ -42,8 +41,8 @@ st.markdown("""
 <nav class="ap-nav">
     <div class="ap-logo">🌬️ <span>Air</span>Pulse</div>
     <div class="ap-nav-links">
-        <a href="https://dashboard1air.streamlit.app/" class="active">D1 · Data Explorer</a>
-        <a href="https://forecastair.streamlit.app/">D2 · Forecast</a>
+        <a href="https://dashboard1air.streamlit.app/">D1 · Data Explorer</a>
+        <a href="https://forecastair.streamlit.app/" class="active">D2 · Forecast</a>
         <a href="https://alertsair.streamlit.app/">D3 · Alerts</a>
         <a href="https://admirairr.streamlit.app/">D4 · Admin</a>
     </div>
