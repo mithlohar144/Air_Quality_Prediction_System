@@ -118,7 +118,12 @@ def generate_forecast(city, pollutant="PM2.5", horizon_hours=24, model="LSTM"):
         .ffill()
     )
     base = float(city_data.iloc[-1])
-    dates = pd.date_range(city_data.index[-1] + pd.Timedelta(hours=1), periods=horizon_hours, freq="H")
+    # Use explicit hourly frequency string compatible with current pandas
+    dates = pd.date_range(
+        city_data.index[-1] + pd.Timedelta(hours=1),
+        periods=horizon_hours,
+        freq="1h",
+    )
     trend = np.linspace(0, np.random.uniform(-8, 8), horizon_hours)
     noise = np.random.uniform(-4, 4, horizon_hours)
     forecast = base + trend + noise
