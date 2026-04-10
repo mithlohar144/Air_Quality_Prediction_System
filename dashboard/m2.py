@@ -15,7 +15,7 @@ html,body,[data-testid="stAppViewContainer"],[data-testid="stApp"]{background:va
 [data-testid="stHeader"],footer,#MainMenu{display:none !important;}
 .block-container{padding:0 !important;max-width:100% !important;}
 [data-testid="stSidebar"]{background:var(--surface) !important;border-right:1px solid var(--border);}
-[data-testid^="stSidebarNav"]{display:none !important;}
+[data-testid^="stSidebarNav"]{display:block !important;}
 [data-testid="stSidebar"] *{color:var(--text) !important;}
 [data-testid="stSelectbox"] div[data-baseweb="select"] > div{background:var(--surface2) !important;border-color:var(--border) !important;color:var(--text) !important;}
 div[data-testid="metric-container"]{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem 1.25rem;}
@@ -107,7 +107,16 @@ def simulate_city_performance(city):
 
 def generate_forecast(city, pollutant="PM2.5", horizon_hours=24, model="LSTM"):
     np.random.seed(abs(hash(city + pollutant + model)) % (10 ** 6))
-    city_data = city_df.set_index("Datetime")[pollutant].resample("H").mean().fillna(method="ffill")
+    # Ensure datetime index and use an explicit hourly frequency for compatibility
+    city_data = city_df.copy()
+    city_data["Datetime"] = pd.to_datetime(city_data["Datetime"], errors="coerce")
+    city_data = (
+        city_data.set_index("Datetime")[pollutant]
+        .sort_index()
+        .resample("1h")
+        .mean()
+        .ffill()
+    )
     base = float(city_data.iloc[-1])
     dates = pd.date_range(city_data.index[-1] + pd.Timedelta(hours=1), periods=horizon_hours, freq="H")
     trend = np.linspace(0, np.random.uniform(-8, 8), horizon_hours)
